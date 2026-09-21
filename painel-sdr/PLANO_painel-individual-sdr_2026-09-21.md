@@ -150,6 +150,56 @@ outubro sai com o link do painel em vez da calculadora vazia.
 - Os alarmes da Camada 3 (zero discagem ontem, decisor sem agendamento, aceite pendente >24h) saem do mesmo JSON, no mesmo run. O canal do Slack e o convite do bot continuam pendentes do Notion "5 · Automação".
 - Números pequenos no diário: o painel mostra **acumulado do mês contra a meta rampada pró-rata dos dias úteis decorridos**, não o dia isolado. O dia isolado só aparece no bloco de atividade (discagens, conversas, decisor).
 
+## 6 · Go / no-go — conferido em 21/09 à noite
+
+### Respostas do Kim no Notion "5 · Automação" e o que cada uma vira
+
+| Decisão | Resposta | Efeito |
+|---|---|---|
+| Alvos por indicador | "Encontre no playbook o que temos definido como target" | Levantado abaixo. Um alvo não existe em lugar nenhum: % mínimo de ligações com código |
+| Canal e nomes | `#update_routines`, já tem o bot de Backups | Canal privado `C0BKDE4UQTX`. O bot **Carecode Metrics** não entra lá (só `chat:write.public`). O painel posta com o token do **Carecode Backups**, que já está no canal. Painel nomeia pessoas: o canal é operacional, não do time |
+| Virada da taxonomia | "A princípio outubro" | `cfg.py` ganha `DATA_VIRADA_TAXONOMIA = 2026-10-01`. Até 30/09 o de-para LEGADO traduz; de 01/10 em diante ligação fora do grupo 34456 conta como **sem código** |
+| Diário × semanal | Diário primeiro; semanal segunda cedo | Bate com a decisão 6 (08h45). Segunda o mesmo run alimenta o weekly das 07h30 |
+
+### Alvos — o que está escrito e onde
+
+| Indicador | Alvo | Fonte |
+|---|---|---|
+| Discagens humanas / dia / SDR | **50** (meta) · **40** (piso, alarme abaixo) | Meta Comercial v2 "50 leads novos/dia" + benchmark Tako · piso proposto no Plano de Rampa §3 (nunca formalizado) |
+| Agendamentos | **2,5 / dia** → 55 / mês @100% × rampa | Meta Comercial v2 |
+| Show rate (realizadas ÷ agendadas) | **80%** | Meta Comercial v2 ("80% comparecem"); `aba_premissas` usa 75% — adotar 80%, é a versão publicada ao time |
+| Taxa de aceite (aceitas ÷ realizadas) | **75%** | `aba_premissas` (Tako 65% real, 75% meta) |
+| Demos aceitas / mês | **35 @100%** × rampa (~8 / semana) | Meta Comercial v2 · calculadoras |
+| Gate de atividade | **80%** dos leads trabalhados | `aba_premissas` — abaixo disso o componente de demos não acelera acima de 100% |
+| Ligações com código ao desligar | **100%** obrigatório · alarme abaixo de **90%** | Playbook v2.1 diz "obrigatório", sem número. O 90% é proposta minha — confirmar |
+| Resposta a WhatsApp de lead | < 5 min em horário comercial | Playbook v2.1 (fica para a Camada 3, não é do painel) |
+| Aceite pelo closer | ≤ 24h após a Demo Date | `demo_aceita` / `demo_aceita_em` |
+
+Conflito a fechar: **50 ou 40 discagens/dia**. Recomendação: 50 é a meta que aparece com o alvo ao lado; 40 é o piso que dispara alarme. Os dois convivem sem confundir.
+
+### Bloqueios reais antes de ligar o motor
+
+| # | Bloqueio | Gravidade | Quem resolve |
+|---|---|---|---|
+| 1 | **Sync 3C+ → CRM parado desde 15/09** (150h em 21/09, "ZERO ligações hoje — operação parada" no `#update_routines`; fila abortada por falha na supressão) | 🔴 O painel lê a 3C+ direto, então a camada de atividade funciona — mas `DECISOR_DEMO` não vira deal e o CRM não recebe ligação. Sem isso agendamento pela discagem não aparece no HubSpot | Mac (Kim) — `Ligacao-Agent/logs/sync.log` |
+| 2 | **Bianca e Viviane sem `agent_id` da 3C+** no `OWNER_POR_AGENTE` | 🟡 Sem elas não há discagem nem dias trabalhados. Outubro é o mês em que a meta delas começa | Mac: listar agentes na 3C+ e acrescentar em `cfg.py` |
+| 3 | **Propriedade `motivo_nao_realizada`** não existe | 🟡 Só o no-show fica sem qualificação. Não bloqueia o resto | Kim na UI (2 min) ou script no Mac (precedente `phase1_hubspot_setup.py`). O MCP do HubSpot desta sessão não cria propriedade |
+| 4 | **Dashboard do HubSpot** não sai daqui | 🟡 A API de relatórios não é pública e o MCP só lê. Kim monta na UI com a especificação da §3 (7 relatórios) | Kim, 30–45 min |
+| 5 | 13 deals pendentes de aceite > 24h | 🟡 Trava o número de setembro dos SDRs | Mariana |
+| 6 | Planilha de exceções (férias/atestado) não existe | 🟢 Motor nasce sem ela e avisa quando um dia útil não tem discagem | Nathally |
+
+### Veredicto
+
+**Go para a fase 3 (motor + artifacts), com o item 1 em paralelo.** As decisões estão todas tomadas, os alvos existem e as fontes estão mapeadas. O que falta é operacional e está listado acima. Ordem sugerida para a próxima sessão no Mac:
+
+1. Religar o sync 3C+ → CRM e a fila (item 1) — é operação, não é painel, mas sem ligação não há número.
+2. `cfg.py`: `agent_id` de Bianca e Viviane + `DATA_VIRADA_TAXONOMIA`.
+3. `metricas.py`: `dias_com_discagem` por agente.
+4. `Report-Agents/sdr-individual/`: motor, render, launchd seg–sex 08h45, post via token do Backups em `#update_routines`.
+5. Artifacts "Painel · <nome>" × 4 + "Painel · Time".
+
+Kim, fora do Mac: criar `motivo_nao_realizada`, montar o dashboard na UI e confirmar os alvos marcados como proposta (90% de código; 50 meta / 40 piso).
+
 ---
 
 **Fontes:** HubSpot portal 51359057 (`query_crm_data` 21/09; relatórios 350834064 / 350834472 /
