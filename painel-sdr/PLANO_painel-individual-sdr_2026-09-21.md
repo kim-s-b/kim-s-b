@@ -133,14 +133,22 @@ outubro sai com o link do painel em vez da calculadora vazia.
 
 ---
 
-## 5 · Decisões que travam a implementação
+## 5 · Decisões — tomadas pelo Kim em 21/09
 
-1. **Agendamento inbound tratado por SDR conta?** Hoje inbound entra sem `sdr_originador`. Se contar, a regra "preencher uma vez ao agendar" vale também para inbound.
-2. **Dias trabalhados:** aceitar a 3C+ como fonte (dia com ≥1 discagem humana) + override manual? Ou manter só dias úteis do calendário?
-3. **Remarcação:** contar toda mudança de Demo Date, ou só as pedidas pelo lead? (A primeira é automática e reconstrói o passado; a segunda pede campo e hábito.)
-4. **No-show na conta do SDR:** entra só como informação, ou desconta algo? A carta hoje diz que show rate é 1:1, não comissão — sugiro manter.
-5. **Quem vê o quê:** cada SDR vê só o próprio painel (artifact pessoal, como a calculadora) e o dashboard do HubSpot é do time inteiro? Ou ranking aberto?
-6. **Cadência da Camada 2:** semanal na segunda (recomendado para setembro/outubro) ou já diário?
+| # | Decisão | Escolha | Efeito no plano |
+|---|---|---|---|
+| 1 | Demo inbound agendada por SDR conta? | **Conta.** Regra única: quem agendou preenche `sdr_originador`, outbound ou inbound | Atualizar a descrição da propriedade e o roteiro do SDR. Painel não separa origem |
+| 2 | Fonte de dias trabalhados | **3C Plus + override.** Dia trabalhado = dia com ≥1 discagem humana do agente; planilha de exceções (férias, atestado) | `metricas.py` expõe `dias_com_discagem` por agente; motor lê a planilha de exceções |
+| 3 | Remarcação | **Histórico da Demo Date.** Cada mudança depois da 1ª = 1 remarcação | Zero campo novo. Motor lê `propertiesWithHistory` de `demo` |
+| 4 | No-show na conta do SDR | **Só informação.** Aparece no painel e no 1:1, não desconta | Cria `motivo_nao_realizada` só para qualificar o dado. Régua da carta não muda |
+| 5 | Visibilidade | **Painel pessoal + dashboard do time.** Artifact individual por SDR; dashboard HubSpot aberto ao time Sales com filtro por SDR | Sem permissão por owner no HubSpot. Artifact de time só para Kim e Nathally |
+| 6 | Cadência do painel individual | **Diário, 08h45.** Alimenta a daily das 9h | O motor nasce diário, não semanal. Camadas 2 e 3 se fundem: o mesmo run que republica os artifacts dispara os alarmes. Segunda ele também alimenta o weekly |
+
+### O que muda no plano com a cadência diária
+- `sdr_individual.py` roda em launchd **seg–sex 08h45**, com lock e caffeinate como o weekly. A janela do dia anterior vem da 3C+ (`/calls` aceita até 31 dias, então o mês corrente cabe numa chamada).
+- A leitura do HubSpot é do **mês corrente inteiro** a cada rodada (fluxo por data de entrada em Demo e `demo_aceita_em`), então não há estado a manter: re-rodar é seguro.
+- Os alarmes da Camada 3 (zero discagem ontem, decisor sem agendamento, aceite pendente >24h) saem do mesmo JSON, no mesmo run. O canal do Slack e o convite do bot continuam pendentes do Notion "5 · Automação".
+- Números pequenos no diário: o painel mostra **acumulado do mês contra a meta rampada pró-rata dos dias úteis decorridos**, não o dia isolado. O dia isolado só aparece no bloco de atividade (discagens, conversas, decisor).
 
 ---
 
