@@ -1,0 +1,19 @@
+# Patch para Carecode-Agents/Ligacao-Agent/cfg.py — OWNER_POR_AGENTE (23/09/2026)
+# Owners conferidos no HubSpot em 21/09: Viviane 99235720 · Mariana 99235153 · Bianca 99235719.
+# Agentes conferidos na 3C+ em 15/09 (GET /agents): Viviane 252924 · Mariana 249600. Bianca: sem agente.
+# Aplicar com: cd Carecode-Agents && git apply ../kim-s-b/painel-sdr/cfg_owner_por_agente.patch
+--- a/Ligacao-Agent/cfg.py
++++ b/Ligacao-Agent/cfg.py
+@@
+ OWNER_POR_AGENTE = {
+     "246732": "97347695",   # Natália (SDR, 1002)      -> Natalia Domingues
+     "246736": "97347694",   # Raphael (SDR, 1003)      -> Raphael Reder
+     "246792": "97347697",   # Fábio   (Vendedor, 1004) -> Fabio Augusto
++    "252924": "99235720",   # Viviane (SDR, 1030)      -> Viviane Paixão   (owner criado após 15/09)
++    "249600": "99235153",   # Mariana (Vendedora, 1007)-> Mariana Magalhães (owner criado após 15/09)
++    # Bianca Monteiro (owner 99235719) ainda SEM agente na 3C+ em 23/09 — mapear quando o agente existir.
+ }
++
++# Virada da taxonomia (decisão Kim 21/09, Notion "5 · Automação"): até 30/09 o de-para LEGADO
++# traduz o grupo antigo; de 01/10 em diante, qualificação fora do grupo 34456 conta como SEM CÓDIGO.
++DATA_VIRADA_TAXONOMIA = "2026-10-01"
