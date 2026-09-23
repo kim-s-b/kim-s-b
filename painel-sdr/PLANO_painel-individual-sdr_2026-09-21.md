@@ -200,6 +200,27 @@ Conflito a fechar: **50 ou 40 discagens/dia**. Recomendação: 50 é a meta que 
 
 Kim, fora do Mac: criar `motivo_nao_realizada`, montar o dashboard na UI e confirmar os alvos marcados como proposta (90% de código; 50 meta / 40 piso).
 
+## 7 · Conferência dos bloqueios — 23/09
+
+| # | Item | Estado em 23/09 | Próximo passo |
+|---|---|---|---|
+| 1 | Sync 3C+ → CRM | ✅ **Voltou em 21/09 22h** (`#update_routines`: 258 lidas em 21/09, 123 em 22/09). Mas **99–100% das ligações são para números fora do CRM** → nada vira Call nem deal. É a decisão "sourcing antes ou depois do CRM" da página Notion "Discagem — 2 primeiras semanas" (09/09), ainda com a Coordenação | Painel não bloqueia (lê a 3C+ direto). Agendamento vindo de discagem depende de o SDR criar o deal na UI — está acontecendo (Raphael 8, Natalia 5 deals desde 14/09, todos com `sdr_originador`) |
+| 2 | Agentes 3C+ ↔ owners | 🟡 `cfg.py` foi conferido ao vivo em 15/09: **Viviane tem agente `252924`**, Mariana `249600`; **Bianca não tem agente na 3C+**. Os owners de Viviane (`99235720`), Bianca (`99235719`) e Mariana (`99235153`) já existem no HubSpot | Patch pronto para `OWNER_POR_AGENTE`: `"252924": "99235720"` (Viviane) · `"249600": "99235153"` (Mariana). Bianca: criar o agente na 3C+ (admin), depois mapear |
+| 3 | `motivo_nao_realizada` | 🟡 **v1 desenhada e script pronto**: `painel-sdr/hubspot/criar_motivo_nao_realizada.py` (dry-run por padrão, idempotente). Não roda daqui: sem token do HubSpot nesta sessão | Rodar no Mac com `--write` (token `~/.carecode_outbound_hstoken`) **ou** cadastrar `HUBSPOT_TOKEN` como segredo do ambiente cloud e eu rodo. Depois, lógica condicional na UI (entra no plano do item 4). Texto para o time: `painel-sdr/COMO-MARCAR-demo-nao-realizada.md` |
+| 4 | Dashboard HubSpot | ⏸ Adiado por decisão do Kim | Plano detalhado para execução via Claude in Chrome quando 1–3 e 5 estiverem prontos. Inclui a lógica condicional do item 3 e ligar os 3 workflows do gate |
+| 5 | Pendentes de aceite | 🔴 **16 deals** em Demo com data passada e sem juízo | Ver tabela abaixo. Os 3 workflows do gate (`1884131449` SLA 24h, `1884148564`, `1884451698`) estão **pausados desde 14/09** — ligá-los faz a cobrança chegar sozinha ao dono do deal |
+
+### Quem resolve os 16 pendentes
+
+| Dono do deal | Deals | Leitura |
+|---|---|---|
+| **Kim** (`87327783`) | 11 | 7 são **anteriores ao gate** (Demo Date de 21/07 a 09/09: Clínica da Cidade, Hospital Santa Monica, Clínica SOL, Saúde Clara, IRAJ, Vittá, Avelino Ferri, Unicus) — não é aceite, é higiene: mover para Proposta/Nutrição/Lost. 3 são do gate: Hospital Allume (15/09), Lab. Santa Catarina (18/09), **Clínica ELA (22/09, SDR Natalia)** — estes contam na quota |
+| **Raphael** (`97347694`) | 2 | Dr. Ricardo (15/09) e Alexandre (21/09). SDR como dono de deal em Demo = o handoff para o closer não aconteceu. Quem conduziu a demo julga; se foi o Kim, o deal muda de dono primeiro |
+| **Sem dono** | 2 | [META] JulianaMelo (15/09) e [META] MadelaineHellena (21/09) — inbound de Meta Ads sem owner. Atribuir a quem fez a demo (a nota Samskit de 22/09 foi para o deal da Madelaine) |
+| **Natalia** (`97347695`) | 1 | Eclat Beaute — Demo Date **23/09**, ainda dentro do prazo. Mesmo caso do Raphael: SDR dona do deal |
+
+Regra que resolve os dois casos de SDR como dono: **quem conduz a demo é o dono do deal a partir do handoff**; o SDR fica em `sdr_originador`. É o que a descrição da propriedade já diz.
+
 ---
 
 **Fontes:** HubSpot portal 51359057 (`query_crm_data` 21/09; relatórios 350834064 / 350834472 /
