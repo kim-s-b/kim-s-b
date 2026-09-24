@@ -221,6 +221,19 @@ Kim, fora do Mac: criar `motivo_nao_realizada`, montar o dashboard na UI e confi
 
 Regra que resolve os dois casos de SDR como dono: **quem conduz a demo é o dono do deal a partir do handoff**; o SDR fica em `sdr_originador`. É o que a descrição da propriedade já diz.
 
+## 8 · Execução — 23 e 24/09 (Mac)
+
+Detalhe e IDs: `Carecode-Agents` branch `feat/painel-sdr-dashboard`, `Report-Agents/sdr-individual/RUNLOG.md`.
+
+| Item | Estado |
+|---|---|
+| Agentes → owners | ✅ Viviane, Mariana e **Bianca (`253920`, agente criado depois do patch)** no `cfg.py` + `DATA_VIRADA_TAXONOMIA` (commit `348259d`) |
+| `motivo_nao_realizada` | ✅ criada, e obrigatória quando Demo aceita = Não realizada (lógica condicional na UI). `motivo_recusa` ganhou a mesma regra para Recusada — não existia |
+| Workflows do gate | ✅ já estavam ligados desde 14/09 ~23:50 — o "pausados" acima estava desatualizado |
+| Teste do gate | ✅ deal TESTE: tarefa em 4 s, campo exigido na UI, carimbos W2/W3; arquivado |
+| Dashboard "SDR · Individual" | 🟡 6 de 7 no ar (`22936185`, time Sales só leitura). Falta "Receita gerada" (deals × line items só sai no builder de arrastar) |
+| Pendentes de aceite | 🟡 19 → 12. Lotes B, C, E e parte do A aplicados; Proposta (SOL, IRAJ, Avelino, Unicus, Dr. Joel) e lote D aguardam o Kim |
+
 ---
 
 **Fontes:** HubSpot portal 51359057 (`query_crm_data` 21/09; relatórios 350834064 / 350834472 /
