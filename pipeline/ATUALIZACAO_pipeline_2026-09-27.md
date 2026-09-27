@@ -3,7 +3,7 @@
 Fontes lidas em 27/09: `Backups-TXT/exports_samskit` (22 reuniões de 11/09 a 25/09) e
 `exports_whatsapp` / `exports_whatsapp3c` / conta do bot (34 números de contatos de deals abertos).
 Cruzado com o HubSpot ao vivo (pipeline Sales, 36 deals em Demo, Proposta e Negociação).
-**Nada foi escrito no HubSpot.** Tudo abaixo é proposta, aplicada só com o OK do Kim, por lote.
+**Status (27/09, 15h40):** Kim aprovou o Lote 1 só para o Claudio Wulkan e o Lote 2 inteiro. Lote 3 não aprovado. 12 de 14 mudanças gravadas e relidas; Meso Clinic e Dra Fernanda Borba barradas por campo condicional (ver §Execução).
 
 Regras respeitadas: Proposta exige `proximo_fup` + `demo_aceita`; Lost exige `motivo_cold_lost`;
 `demo_aceita` segue o gate (5+ médicos ou 500+ atend./mês, decisor, dor); `sdr_originador` não é tocado
@@ -100,3 +100,41 @@ onde já existe; dono do deal = quem conduz a demo a partir do handoff.
 - **Susin Clínica Integrada** (Closed Won): fechamento foi verbal em 21/09; conferir se o contrato digital foi assinado.
 - **Agape Auditiva, Glauco, Dr. Guilherme Wood, Hospital da Visão, Leila Cedin, Stephan**: sem sinal novo que justifique mudança. Leila e Stephan já têm follow-up coerente (05/10 e 30/09).
 - **Seis números** (Glauco, Alexandre, Luis Ricardo, Arthur, Sebastián, Felipe) têm conversas em três pastas do Drive fora do backup documentado. Não foram lidas.
+
+## Execução — 27/09
+
+| Deal | Resultado |
+|---|---|
+| Clínica SOL, Avelino Ferri, Unicus, Dr. Joel, IRAJ, Nefroclinicas → Proposta | ✅ gravado e relido |
+| Marcelo Queiroz → Negociação | ✅ |
+| Dominica, Dr. Olimpio, Eiger, Florence → Nutrição | ✅ |
+| Claudio Wulkan → não realizada (no-show) + Nutrição | ✅ |
+| Meso Clinic → Demo | ❌ portal exige `atendimentos_por_mes` e `qtd_de_recepcionistas` (lógica condicional). Nenhum dos dois foi dito na reunião |
+| Dra Fernanda Borba → Lost | ❌ portal exige `closed_lost_reason` além de `motivo_cold_lost`. Proposta: "EHR Integration" |
+| Susin Clínica Integrada | já completo: assinatura 22/09, OS 174, Kick-off. Nada a fazer |
+
+Efeito colateral a corrigir: Nefroclinicas voltou para Proposta com `closedate` 09/09 e `closed_lost_reason` "No Response" herdados do Lost.
+
+## Rodada 2 — mapeamento dos demais deals (27/09)
+
+Fontes adicionais: `exports_v2` (Wanda), `exports_ligacoes`, `exports_dermacare` e notas do HubSpot de 08 a 25/09.
+
+| Deal | ID | Evidência | Proposta |
+|---|---|---|---|
+| Eclat Beaute | 65162352144 | Nota da Natalia 25/09: "No show, tentando nova agenda com a proprietária" | Não realizada (no-show), follow-up 30/09, mantém Demo |
+| Alexandre | 65076758064 | Nota do Raphael 24/09: "não compareceu na demonstração e parou de responder"; 40 consultas/mês | Não realizada (no-show) + Nutrição, follow-up 02/11 |
+| [META] JulianaMelo | 64793975216 | Sem transcrição da demo de 15/09; lead em silêncio desde 08/09 | Não realizada (outro) + Nutrição, SDR Raphael — confiança média |
+| [META] MadelaineHellena | 64823844950 | No-show 22/09 confirmado; remarcação de 23/09 sem registro | Não realizada (no-show) + Nutrição, SDR Raphael |
+| [MQL] Luis Ricardo | 65174982706 | Demo 23/09; 1 médico, ~130/mês; não mandou o volume prometido para 25/09 | Recusada (porte) + Nutrição, SDR Raphael, dona Mariana |
+| Arthur Safady | 65204384919 | Demo 25/09; diretor quer começar com 2 mil conversas/mês | Aceita · dona Mariana · follow-up 29/09 (igual ao Lote 1) |
+| Sebastián C | 65062741025 | Demo 24/09; pediu retorno até 28/09 | Aceita · dona Mariana · follow-up 28/09 (igual ao Lote 1) |
+| Leticia Funis | 62634811773 | Demo com Kim 11/09, proposta R$ 900 + R$ 3.000 enviada 14/09, quer implantar até novembro; deal em Lost | Reabrir em Proposta, demo 11/09, follow-up 29/09 |
+| Letícia (SQL) | 65204482819 | Notas da Natalia 23–25/09: gestora, irmã atende, clínica indo a 10 médicos | Pessoa diferente da Letícia Funis. Não mexer |
+| Dra. Vivianne Duarte | — | Demo 17/09; proposta em pptx de 23/09; decide após mentoria de outubro | Criar deal em Nutrição, follow-up 02/11 |
+| Dr. Guilherme Wood | 65077069850 | Nota da Mariana 22/09: demo feita, R$ 700 + R$ 3.000 ofertado | Manter Proposta |
+| Glauco | 64986215715 | Demo agendada 16/09; nada depois; follow-up vencido 21/09 | Só follow-up novo — data com o Kim |
+| Agape Auditiva | 64215121295 | A resposta da Lilian de 17–23/09 não está no backup | Kim leu a resposta: decide |
+
+### Integridade da quota das SDRs — para a Nathally arbitrar
+
+Quatro deals estão com demo **aceita** abaixo do gate (menos de 5 médicos e menos de 500 atend./mês): Dominica (terapeuta solo, SDR Raphael), Luiz Felipe (2 médicos, 40–50/mês, SDR Natalia), Glauco (~200/mês, SDR Raphael) e Dr. Guilherme Wood (1 médico, ~300 conversas/mês, SDR Natalia). Mudar para recusada tira ponto de quota; por isso fica com a Coordenação.
