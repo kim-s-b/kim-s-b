@@ -233,6 +233,7 @@ Detalhe e IDs: `Carecode-Agents` branch `feat/painel-sdr-dashboard`, `Report-Age
 | Teste do gate | ✅ deal TESTE: tarefa em 4 s, campo exigido na UI, carimbos W2/W3; arquivado |
 | Dashboard "SDR · Individual" | 🟡 6 de 7 no ar (`22936185`, time Sales só leitura). Falta "Receita gerada" (deals × line items só sai no builder de arrastar) |
 | Pendentes de aceite | 🟡 19 → 12. Lotes B, C, E e parte do A aplicados; Proposta (SOL, IRAJ, Avelino, Unicus, Dr. Joel) e lote D aguardam o Kim |
+| Motor diário (Fase 3, 28/09) | ✅ no ar: `Report-Agents/sdr-individual/`, launchd seg–sex 08h45, PR #7. Painel pessoal no **Notion** (decisão do Kim: artifact não se atualiza sozinho), post no `#update_routines`. Golden bate com o HubSpot. Falta a integração do Notion ser conectada às páginas e a 1ª rodada conferida |
 
 ---
 
